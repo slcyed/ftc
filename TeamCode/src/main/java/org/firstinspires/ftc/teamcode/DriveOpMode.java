@@ -22,7 +22,6 @@ public class DriveOpMode extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftFrontDrive = null;
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
@@ -41,7 +40,7 @@ public class DriveOpMode extends LinearOpMode {
         // to the names assigned during the robot configuration step on the DS or RC devices.
 
         //Expansion hub 1
-        leftFrontDrive  = hardwareMap.get(DcMotor.class, "frontLeftMotor");
+        DcMotor leftFrontDrive = hardwareMap.get(DcMotor.class, "frontLeftMotor");
         //Expansion hub 0
         leftBackDrive  = hardwareMap.get(DcMotor.class, "backLeftMotor");
         //Control hub 2
