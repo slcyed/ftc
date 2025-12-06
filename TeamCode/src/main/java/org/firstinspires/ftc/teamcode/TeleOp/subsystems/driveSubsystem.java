@@ -13,23 +13,20 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class driveSubsystem extends SubsystemBase {
     private MecanumDrive drive;
-    private DoubleSupplier strafeSpeed;
-    private DoubleSupplier forwardSpeed;
-    private DoubleSupplier turnSpeed;
+    private double strafeSpeed;
+    private double forwardSpeed;
+    private double turnSpeed;
 
+    private double m_gamepad;
     public driveSubsystem(Motor lf, Motor rf, Motor lb, Motor rb, GamepadEx gamepad) {
-        MecanumDrive drive = new MecanumDrive(lf,rf,lb,rb);
-        strafeSpeed = gamepad::getLeftX;
-        forwardSpeed = gamepad::getLeftY;
-        turnSpeed = gamepad::getRightX;
+        drive = new MecanumDrive(lf,rf,lb,rb);
         drive.setRightSideInverted(true);
+        strafeSpeed = gamepad.getLeftX();
+        forwardSpeed = gamepad.getRightX();
+        turnSpeed = gamepad.getLeftX();
     }
 
     public void drive() {
-        drive.driveRobotCentric(strafeSpeed.getAsDouble(), forwardSpeed.getAsDouble(), turnSpeed.getAsDouble(), false);
-    }
-
-    public void driveForDistance() {
-
+        drive.driveRobotCentric(strafeSpeed,forwardSpeed,turnSpeed,false);
     }
 }

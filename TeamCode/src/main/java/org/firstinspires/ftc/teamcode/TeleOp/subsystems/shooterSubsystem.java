@@ -10,15 +10,12 @@ public class shooterSubsystem extends SubsystemBase {
         m_flyWheelMotor = flyWheelMotor;
     }
 
-    public void runFlyWheel() {
-        m_flyWheelMotor.set(m_speed);
-    }
-
     public void toggleSpeed() {
-        if (m_speed == 1) {
+        if (m_speed == .75) {
             m_speed = 0;
         } else {
-            m_speed = 1;
+            m_speed = -.75;
         }
+        m_flyWheelMotor.set(m_speed);
     }
 }

@@ -16,7 +16,15 @@ public class toggleFlyWheelCommand extends CommandBase {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(shooterSubsystem);
     }
-    public void execute(){
+    @Override
+    public void initialize(){
         m_shooterSubsystem.toggleSpeed();
+//        m_shooterSubsystem.runFlyWheel();
+//        System.out.println(1);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 }
