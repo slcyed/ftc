@@ -1,5 +1,8 @@
-package org.firstinspires.ftc.teamcode.TeleOp;
+package org.firstinspires.ftc.teamcode.teleop;
 
+import org.firstinspires.ftc.teamcode.teleop.CommandScheduler;
+
+import com.arcrobotics.ftclib.command.RunCommand;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public abstract class CommandOpMode extends LinearOpMode {
@@ -11,13 +14,14 @@ public abstract class CommandOpMode extends LinearOpMode {
         waitForStart();
 
         while(opModeIsActive()){
-            run();
+            CommandScheduler.getInstance().run();
         }
     }
 
     public abstract void initialize();
 
-    public void run() {
-
+    public void schedule(Command command) {
+        CommandScheduler.schedule(command);
     }
+
 }

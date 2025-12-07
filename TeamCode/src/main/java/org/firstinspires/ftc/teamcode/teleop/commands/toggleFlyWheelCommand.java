@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.TeleOp.commands;
+package org.firstinspires.ftc.teamcode.teleop.commands;
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.TeleOp.subsystems.shooterSubsystem;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.shooterSubsystem;
 
 public class toggleFlyWheelCommand extends CommandBase {
     private final shooterSubsystem m_shooterSubsystem;

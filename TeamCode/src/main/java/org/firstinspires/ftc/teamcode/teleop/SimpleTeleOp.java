@@ -1,14 +1,13 @@
-package org.firstinspires.ftc.teamcode.TeleOp;
+package org.firstinspires.ftc.teamcode.teleop;
 
 import com.arcrobotics.ftclib.command.button.Button;
-import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.TeleOp.subsystems.shooterSubsystem;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.shooterSubsystem;
 
 @TeleOp
 public class SimpleTeleOp extends CommandOpMode {
@@ -22,13 +21,13 @@ public class SimpleTeleOp extends CommandOpMode {
 
     @Override
     public void initialize() {
-        shooterSystem = new shooterSubsystem(new Motor(hardwareMap,"centerMotor"));
+        shooterSystem = new shooterSubsystem(new Motor(hardwareMap, "centerMotor"));
         driverOp = new GamepadEx(gamepad1);
         rightBumper = driverOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER);
 //        rightBumper.whenPressed(new InstantCommand(shooterSystem::toggleSpeed,shooterSystem));
         mecanumDrive = new MecanumDrive(new Motor(hardwareMap, "frontLeftMotor", Motor.GoBILDA.RPM_1150), new Motor(hardwareMap, "frontRightMotor", Motor.GoBILDA.RPM_1150), new Motor(hardwareMap, "backLeftMotor", Motor.GoBILDA.RPM_1150), new Motor(hardwareMap, "backRightMotor", Motor.GoBILDA.RPM_1150));
         // update telemetry every loop
-//        schedule(new RunCommand(telemetry::update));
+        schedule(new RunCommand(telemetry::update));
     }
 //    public void run() {
 //      mecanumDrive.driveRobotCentric(driverOp.getLeftX(),
