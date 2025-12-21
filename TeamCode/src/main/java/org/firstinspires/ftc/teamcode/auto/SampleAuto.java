@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.auto;
 
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -67,20 +67,12 @@ public class SampleAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Motor lf = new Motor(hardwareMap, "frontLeftMotor", Motor.GoBILDA.RPM_1150);
-        Motor rf = new Motor(hardwareMap, "frontRightMotor", Motor.GoBILDA.RPM_1150);
-        Motor lb = new Motor(hardwareMap, "backLeftMotor", Motor.GoBILDA.RPM_1150);
-        Motor rb = new Motor(hardwareMap, "backRightMotor", Motor.GoBILDA.RPM_1150);
+//        Motor lf = new Motor(hardwareMap, "frontLeftMotor", Motor.GoBILDA.RPM_1150);
+//        Motor rf = new Motor(hardwareMap, "frontRightMotor", Motor.GoBILDA.RPM_1150);
+//        Motor lb = new Motor(hardwareMap, "backLeftMotor", Motor.GoBILDA.RPM_1150);
+//        Motor rb = new Motor(hardwareMap, "backRightMotor", Motor.GoBILDA.RPM_1150);
 
         waitForStart();
-        lf.set(-1);
-        rf.set(-1);
-        lb.set(1);
-        rb.set(1);
-        sleep(600);
-        lf.set(-0);
-        rf.set(-0);
-        lb.set(0);
-        rb.set(0);
+
     }
 }
