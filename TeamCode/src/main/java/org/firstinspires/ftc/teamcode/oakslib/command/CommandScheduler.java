@@ -59,7 +59,7 @@ public final class CommandScheduler {
      * Period and timeout should be equal to the time between each loop in OpMode. (By default 1ms")
      */
 
-    private final Watchdog m_watchdog = new Watchdog(() -> {}, 1, 1, TimeUnit.MILLISECONDS);
+//    private final Watchdog m_watchdog = new Watchdog(() -> {}, 1, 1, TimeUnit.MILLISECONDS);
 
     // Enable the CommandScheduler
 
@@ -102,7 +102,7 @@ public final class CommandScheduler {
             return;
         }
 
-        m_watchdog.stroke();
+//        m_watchdog.stroke();
 
         // Run the periodic method of all registered subsystems.
         for (Subsystem subsystem : m_subsystems.keySet()) {

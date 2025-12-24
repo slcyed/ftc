@@ -5,12 +5,14 @@ import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
 
 public class SetFlyWheel extends Command {
 
-    private final double m_flyWheelPower;
+    private final String m_flyWheelPower;
+    private final ShooterSubsystem m_testSubsystem;
 
-    public SetFlyWheel(double power, ShooterSubsystem shooterSubsystem) {
+    public SetFlyWheel(String power, ShooterSubsystem shooterSubsystem) {
         m_flyWheelPower = power;
+        m_testSubsystem = shooterSubsystem;
     }
     public void execute() {
-
+        m_testSubsystem.updateFlyWheel(m_flyWheelPower);
     }
 }

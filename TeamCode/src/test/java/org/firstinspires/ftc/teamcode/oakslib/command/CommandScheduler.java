@@ -52,7 +52,7 @@ public final class CommandScheduler {
      * Period and timeout should be equal to the time between each loop in OpMode. (By default 1ms")
      */
 
-    private final Watchdog m_watchdog = new Watchdog(() -> {}, 1, 1, TimeUnit.MILLISECONDS);
+//    private final Watchdog m_watchdog = new Watchdog(() -> {}, 1, 1, TimeUnit.MILLISECONDS);
 
     // Enable the CommandScheduler
 
@@ -91,11 +91,14 @@ public final class CommandScheduler {
      * <p>Any subsystems not being used as requirements have their default methods started.
      */
     public void run() {
+
         if (m_disabled) {
             return;
         }
 
-        m_watchdog.stroke();
+//        m_watchdog.stroke();
+
+        m_inRunLoop = true;
 
         // Run the periodic method of all registered subsystems.
         for (Subsystem subsystem : m_subsystems.keySet()) {
@@ -122,12 +125,21 @@ public final class CommandScheduler {
             }
         }
 
-        // Run subsystem default methods
-
-        for (Subsystem subsystem : m_subsystems.keySet()) {
-            Objects.requireNonNull(m_subsystems.get(subsystem)).execute();
+        for (Command command : m_toSchedule) {
+            m_scheduledCommands.add(command);
+            m_toSchedule.remove(command);
         }
 
+        // Run subsystem default methods
+        if (!m_subsystems.isEmpty()) {
+            for (Subsystem subsystem : m_subsystems.keySet()) {
+                if (m_subsystems.get(subsystem)!=null) {
+                    Objects.requireNonNull(m_subsystems.get(subsystem)).execute();
+                }
+            }
+        }
+
+        m_inRunLoop = false;
     }
 
     public Command requiring(Subsystem subsystem) {

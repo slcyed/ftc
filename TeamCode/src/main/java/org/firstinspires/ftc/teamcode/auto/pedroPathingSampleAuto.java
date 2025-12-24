@@ -18,13 +18,13 @@ public class pedroPathingSampleAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        File file = new File("");
-        PathChain path = null;
-        if (file != null) {
-            path = parsePathFile(follower, file);
-        }
-        waitForStart();
-
-        follower.followPath(path);
+//        File file = new File("");
+//        PathChain path = null;
+//        if (file != null) {
+//            path = parsePathFile(follower, file);
+//        }
+//        waitForStart();
+//
+//        follower.followPath(path);
     }
 }

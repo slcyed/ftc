@@ -8,14 +8,13 @@ import org.firstinspires.ftc.teamcode.oakslib.controllers.PIDFController;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    private final DcMotorEx m_flyWheel;
-    private final PIDFController m_flyWheelController = new PIDFController(0.01, 0, 0.001, 0.05);;
+//    private final DcMotorEx m_flyWheel;
+//    private final PIDFController m_flyWheelController = new PIDFController(0.01, 0, 0.001, 0.05);;
 
-    public ShooterSubsystem(DcMotorEx flyWheel) {
-        m_flyWheel = flyWheel;
+    public ShooterSubsystem() {
     }
 
-    public void updateFlyWheel(double power) {
-        m_flyWheel.setPower((m_flyWheelController.calculate(power*6000, (m_flyWheel.getVelocity(AngleUnit.DEGREES)/360)))/6000);
+    public void updateFlyWheel(String power) {
+        System.out.println(power);
     }
 }
