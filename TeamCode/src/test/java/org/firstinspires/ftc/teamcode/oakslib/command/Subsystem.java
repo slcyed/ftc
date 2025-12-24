@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.oakslib.command;
 
-import java.util.function.Supplier;
-
 public interface Subsystem {
 
     /**

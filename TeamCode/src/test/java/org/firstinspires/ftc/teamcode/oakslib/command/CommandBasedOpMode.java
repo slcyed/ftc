@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode.oakslib.command;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-
-import java.util.function.Predicate;
 
 public abstract class CommandBasedOpMode extends OpMode {
 

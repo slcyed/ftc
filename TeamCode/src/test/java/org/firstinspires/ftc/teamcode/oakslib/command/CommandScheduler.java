@@ -1,21 +1,14 @@
 package org.firstinspires.ftc.teamcode.oakslib.command;
 
-import com.qualcomm.ftccommon.FtcEventLoopBase;
-import com.qualcomm.robotcore.eventloop.EventLoop;
-
 import org.firstinspires.ftc.robotcore.internal.system.Watchdog;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 @SuppressWarnings({"PMD.GodClass", "PMD.TooManyMethods", "PMD.TooManyFields"})
 public final class CommandScheduler {
@@ -132,9 +125,7 @@ public final class CommandScheduler {
         // Run subsystem default methods
 
         for (Subsystem subsystem : m_subsystems.keySet()) {
-            if (!m_requirements.containsKey(subsystem)) {
-                Objects.requireNonNull(m_subsystems.get(subsystem)).execute();
-            }
+            Objects.requireNonNull(m_subsystems.get(subsystem)).execute();
         }
 
     }
