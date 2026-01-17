@@ -29,6 +29,8 @@
 
 package org.firstinspires.ftc.teamcode.auto;
 
+import com.arcrobotics.ftclib.hardware.ServoEx;
+import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -67,12 +69,38 @@ public class SampleAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-//        Motor lf = new Motor(hardwareMap, "frontLeftMotor", Motor.GoBILDA.RPM_1150);
-//        Motor rf = new Motor(hardwareMap, "frontRightMotor", Motor.GoBILDA.RPM_1150);
-//        Motor lb = new Motor(hardwareMap, "backLeftMotor", Motor.GoBILDA.RPM_1150);
-//        Motor rb = new Motor(hardwareMap, "backRightMotor", Motor.GoBILDA.RPM_1150);
+        Motor lf = new Motor(hardwareMap, "frontLeftMotor", Motor.GoBILDA.RPM_1150);
+        Motor rf = new Motor(hardwareMap, "frontRightMotor", Motor.GoBILDA.RPM_1150);
+        Motor lb = new Motor(hardwareMap, "backLeftMotor", Motor.GoBILDA.RPM_1150);
+        Motor rb = new Motor(hardwareMap, "backRightMotor", Motor.GoBILDA.RPM_1150);
+        Motor fw = new Motor(hardwareMap, "centerMotor", Motor.GoBILDA.RPM_1150);
+        ServoEx as = new SimpleServo(hardwareMap, "armServo", 0,180);
 
         waitForStart();
+
+
+        fw.set(-.65);
+        sleep(1000);
+        as.setPosition(.701);
+        sleep(100);
+        as.setPosition(.5);
+        sleep(500);
+        as.setPosition(.701);
+        sleep(100);
+        as.setPosition(.5);
+        as.setPosition(.701);
+        sleep(100);
+        as.setPosition(.5);
+        sleep(100);
+        lf.set(-1);
+        rf.set(-1);
+        lb.set(1);
+        rb.set(1);
+        sleep(600);
+        lf.set(-0);
+        rf.set(-0);
+        lb.set(0);
+        rb.set(0);
 
     }
 }

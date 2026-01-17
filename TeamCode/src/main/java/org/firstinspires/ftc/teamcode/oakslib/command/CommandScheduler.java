@@ -1,21 +1,14 @@
 package org.firstinspires.ftc.teamcode.oakslib.command;
 
-import com.qualcomm.ftccommon.FtcEventLoopBase;
-import com.qualcomm.robotcore.eventloop.EventLoop;
-
 import org.firstinspires.ftc.robotcore.internal.system.Watchdog;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 @SuppressWarnings({"PMD.GodClass", "PMD.TooManyMethods", "PMD.TooManyFields"})
 public final class CommandScheduler {
@@ -98,11 +91,14 @@ public final class CommandScheduler {
      * <p>Any subsystems not being used as requirements have their default methods started.
      */
     public void run() {
+
         if (m_disabled) {
             return;
         }
 
 //        m_watchdog.stroke();
+
+        m_inRunLoop = true;
 
         // Run the periodic method of all registered subsystems.
         for (Subsystem subsystem : m_subsystems.keySet()) {
@@ -126,17 +122,25 @@ public final class CommandScheduler {
         for (Command command : m_scheduledCommands) {
             if (command.isFinished()) {
                 command.end(false);
+                m_scheduledCommands.remove(command);
             }
+        }
+
+        for (Command command : m_toSchedule) {
+            m_scheduledCommands.add(command);
+            m_toSchedule.remove(command);
         }
 
         // Run subsystem default methods
-
-        for (Subsystem subsystem : m_subsystems.keySet()) {
-            if (!m_requirements.containsKey(subsystem)) {
-                Objects.requireNonNull(m_subsystems.get(subsystem)).execute();
+        if (!m_subsystems.isEmpty()) {
+            for (Subsystem subsystem : m_subsystems.keySet()) {
+                if (m_subsystems.get(subsystem)!=null) {
+                    Objects.requireNonNull(m_subsystems.get(subsystem)).execute();
+                }
             }
         }
 
+        m_inRunLoop = false;
     }
 
     public Command requiring(Subsystem subsystem) {

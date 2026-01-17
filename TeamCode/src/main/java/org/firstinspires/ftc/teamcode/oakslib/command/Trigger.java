@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.oakslib.command;
 
+import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
+
 import java.util.function.BooleanSupplier;
 
 public class Trigger implements BooleanSupplier {
@@ -34,7 +36,7 @@ public class Trigger implements BooleanSupplier {
     private void addBinding(BindingBody body) {
         CommandScheduler.getInstance().bind(
             new Runnable() {
-                private boolean m_previous = m_condition.getAsBoolean();
+                private boolean m_previous = false;
 
                 @Override
                 public void run() {

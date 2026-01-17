@@ -62,11 +62,12 @@ public class FinalOp extends LinearOpMode {
         Motor rf = new Motor(hardwareMap, "frontRightMotor", Motor.GoBILDA.RPM_312);
         Motor lb = new Motor(hardwareMap, "backLeftMotor", Motor.GoBILDA.RPM_312);
         Motor rb = new Motor(hardwareMap, "backRightMotor", Motor.GoBILDA.RPM_312);
+        boolean autoMode = false;
         ServoEx armServo = new SimpleServo(hardwareMap, "armServo", 0,180);
 
         PIDFController flyWheelController = new PIDFController(0.01, 0, 0.001, 0.05);
 
-        armServo.setPosition(.51);
+        armServo.setPosition(.5);
 
         MecanumDrive drive = new MecanumDrive(
                 lf,
@@ -80,7 +81,7 @@ public class FinalOp extends LinearOpMode {
 
         IMU imu = hardwareMap.get(IMU.class, "imu");
 //        imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(LogoFacingDirection.LEFT)));
-        initAprilTag();
+//        initAprilTag();
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -94,65 +95,73 @@ public class FinalOp extends LinearOpMode {
 
             // Set Fly Wheel Motor Power when Right Bumper is Pressed
             if (gamepad1.rightBumperWasPressed()) {
-                if (centerMotorPower == -1) {
+                if (centerMotorPower == -.65) {
                     centerMotorPower = 0;
                 }else{
-                    centerMotorPower = -1;
+                    centerMotorPower = -.65;
                 }
             }
 
-            if (gamepad1.dpad_up) {
-                armServo.setPosition(.601);
+//            if (gamepad1.bWasPressed()) {
+//                autoMode = !autoMode;
+//            }
+
+            if (gamepad1.left_bumper) {
+                armServo.setPosition(.701);
 
             } else {
-                armServo.setPosition(.51);
+                armServo.setPosition(.5);
             }
 
             // Calculate heading
 
-            targetFound = false;
-            desiredTag = null;
-
-            // Step through the list of detected tags and look for a matching tag
-            List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-            for (AprilTagDetection detection : currentDetections) {
-                // Look to see if we have size info on this tag.
-                if (detection.metadata != null) {
-                    //  Check to see if we want to track towards this tag.
-                    if (detection.id == DESIRED_TAG_ID) {
-                        // Yes, we want to use this tag.
-                        targetFound = true;
-                        desiredTag = detection;
-                        break;
-                    } else {
-                        // This tag is in the library, but we do not want to track it right now.
-                        telemetry.addData("Skipping", "Tag ID %d is not desired", detection.id);
-                    }
-                } else {
-                    // This tag is NOT in the library, so we don't have enough information to track to it.
-                    telemetry.addData("Unknown", "Tag ID %d is not in TagLibrary", detection.id);
-                }
-            }
+//            targetFound = false;
+//            desiredTag = null;
+//
+//            // Step through the list of detected tags and look for a matching tag
+//            List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+//            for (AprilTagDetection detection : currentDetections) {
+//                // Look to see if we have size info on this tag.
+//                if (detection.metadata != null) {
+//                    //  Check to see if we want to track towards this tag.
+//                    if (detection.id == DESIRED_TAG_ID) {
+//                        // Yes, we want to use this tag.
+//                        targetFound = true;
+//                        desiredTag = detection;
+//                        break;
+//                    } else {
+//                        // This tag is in the library, but we do not want to track it right now.
+//                        telemetry.addData("Skipping", "Tag ID %d is not desired", detection.id);
+//                    }
+//                } else {
+//                    // This tag is NOT in the library, so we don't have enough information to track to it.
+//                    telemetry.addData("Unknown", "Tag ID %d is not in TagLibrary", detection.id);
+//                }
+//            }
 
 //            double  rangeError   = (desiredTag.ftcPose.range - DESIRED_DISTANCE);
-            if (targetFound) {
-                double headingError = desiredTag.ftcPose.bearing;
-                turnAngle = Range.clip(headingError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN);
-            }
-            else {
-                turnAngle = 0;
-            }
+//            if (targetFound) {
+//                double headingError = desiredTag.ftcPose.bearing;
+//                turnAngle = Range.clip(headingError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN);
+//            }
+//            else {
+//                turnAngle = 0;
+//            }
             // Use the speed and turn "gains" to calculate how we want the robot to move.  Clip it to the maximum
 //            driveSpeed = Range.clip(rangeError * SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED);
 
-            drive.driveFieldCentric(
+//            if (!autoMode) {
+            turnAngle = gamepad1.right_stick_x;
+//            }
+
+            drive.driveRobotCentric(
                     gamepad1.left_stick_x,
-                    gamepad1.left_stick_y,
+                    -gamepad1.left_stick_y,
                     turnAngle,
-                    0
+                    false
             );
 
-            centerMotor.setPower((flyWheelController.calculate(centerMotorPower*6000, (centerMotor.getVelocity(AngleUnit.DEGREES)/360)))/6000);
+            centerMotor.setPower(centerMotorPower);
             // Show the elapsed game time.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
@@ -160,22 +169,24 @@ public class FinalOp extends LinearOpMode {
 
     }
 
-    private void initAprilTag() {
-        // Create the AprilTag processor by using a builder.
-        aprilTag = new AprilTagProcessor.Builder().build();
+//    private void initAprilTag() {
+//        // Create the AprilTag processor by using a builder.
+//        aprilTag = new AprilTagProcessor.Builder().build();
+//
+//        // Adjust Image Decimation to trade-off detection-range for detection-rate.
+//        // e.g. Some typical detection data using a Logitech C920 WebCam
+//        // Decimation = 1 ..  Detect 2" Tag from 10 feet away at 10 Frames per second
+//        // Decimation = 2 ..  Detect 2" Tag from 6  feet away at 22 Frames per second
+//        // Decimation = 3 ..  Detect 2" Tag from 4  feet away at 30 Frames Per Second
+//        // Decimation = 3 ..  Detect 5" Tag from 10 feet away at 30 Frames Per Second
+//        // Note: Decimation can be changed on-the-fly to adapt during a match.
+//        aprilTag.setDecimation(3);
+//
+//        // Create the vision portal by using a builder.
+//        visionPortal = new VisionPortal.Builder()
+//                .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
+//                .addProcessor(aprilTag)
+//                .build();
+//    }
 
-        // Adjust Image Decimation to trade-off detection-range for detection-rate.
-        // e.g. Some typical detection data using a Logitech C920 WebCam
-        // Decimation = 1 ..  Detect 2" Tag from 10 feet away at 10 Frames per second
-        // Decimation = 2 ..  Detect 2" Tag from 6  feet away at 22 Frames per second
-        // Decimation = 3 ..  Detect 2" Tag from 4  feet away at 30 Frames Per Second
-        // Decimation = 3 ..  Detect 5" Tag from 10 feet away at 30 Frames Per Second
-        // Note: Decimation can be changed on-the-fly to adapt during a match.
-        aprilTag.setDecimation(3);
-
-        // Create the vision portal by using a builder.
-        visionPortal = new VisionPortal.Builder()
-                .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
-                .addProcessor(aprilTag)
-                .build();
-    }}
+}
