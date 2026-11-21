@@ -17,9 +17,10 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.oakslib.controllers.PIDFController;
+import org.oakslib.controllers.PIDFController;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class FinalOp extends LinearOpMode {
     final double MAX_AUTO_TURN  = 0.25;  //  Clip the turn speed to this max value (adjust for your robot)
     private final int DESIRED_TAG_ID = 20;
 
-    AprilTagDetection desiredTag = null;
+    AprilTagSingleDetection desiredTag = null;
 
     @Override
     public void runOpMode() {
@@ -110,21 +111,25 @@ public class FinalOp extends LinearOpMode {
             // Step through the list of detected tags and look for a matching tag
             List<AprilTagDetection> currentDetections = aprilTag.getDetections();
             for (AprilTagDetection detection : currentDetections) {
+                if (!(detection instanceof AprilTagSingleDetection)) {
+                    continue;
+                }
+                AprilTagSingleDetection singleDet = (AprilTagSingleDetection) detection;
                 // Look to see if we have size info on this tag.
-                if (detection.metadata != null) {
+                if (singleDet.metadata != null) {
                     //  Check to see if we want to track towards this tag.
-                    if (detection.id == DESIRED_TAG_ID) {
+                    if (singleDet.id == DESIRED_TAG_ID) {
                         // Yes, we want to use this tag.
                         targetFound = true;
-                        desiredTag = detection;
+                        desiredTag = singleDet;
                         break;
                     } else {
                         // This tag is in the library, but we do not want to track it right now.
-                        telemetry.addData("Skipping", "Tag ID %d is not desired", detection.id);
+                        telemetry.addData("Skipping", "Tag ID %d is not desired", singleDet.id);
                     }
                 } else {
                     // This tag is NOT in the library, so we don't have enough information to track to it.
-                    telemetry.addData("Unknown", "Tag ID %d is not in TagLibrary", detection.id);
+                    telemetry.addData("Unknown", "Tag ID %d is not in TagLibrary", singleDet.id);
                 }
             }
 

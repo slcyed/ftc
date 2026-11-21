@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.teamcode.auto;
 
-import static org.firstinspires.ftc.teamcode.oakslib.pathing.PathFileParser.parsePathFile;
+import static org.oakslib.pathing.PathFileParser.parsePathFile;
 import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.follower;
 
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.oakslib.pathing.PathFileParser;
+import org.oakslib.pathing.PathFileParser;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 import java.io.File;

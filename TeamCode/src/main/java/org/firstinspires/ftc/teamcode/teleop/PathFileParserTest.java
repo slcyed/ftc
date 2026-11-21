@@ -4,8 +4,8 @@ import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.follower;
 
 import com.pedropathing.paths.PathChain;
 
-import org.firstinspires.ftc.teamcode.oakslib.command.CommandBasedOpMode;
-import org.firstinspires.ftc.teamcode.oakslib.pathing.PathFileParser;
+import org.oakslib.command.CommandBasedOpMode;
+import org.oakslib.pathing.PathFileParser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +13,7 @@ import java.io.InputStream;
 public class PathFileParserTest extends CommandBasedOpMode {
 
     @Override
-    public void init() {
+    protected void initialize() {
 //        System.out.println(context.getResources().openRawResource(R.raw.path1));
         try {
             InputStream in = hardwareMap.appContext.getAssets().open("path1.path");
@@ -28,4 +28,3 @@ public class PathFileParserTest extends CommandBasedOpMode {
 //        rightBumper.onTrue(new SetFlyWheel(1,flyWheelSubsystem));
     }
 }
-

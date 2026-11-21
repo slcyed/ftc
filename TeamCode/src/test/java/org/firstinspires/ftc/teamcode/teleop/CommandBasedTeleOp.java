@@ -12,10 +12,10 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.R;
 import org.firstinspires.ftc.teamcode.commands.SetFlyWheel;
-import org.firstinspires.ftc.teamcode.oakslib.command.CommandBasedOpMode;
-import org.firstinspires.ftc.teamcode.oakslib.command.CommandScheduler;
-import org.firstinspires.ftc.teamcode.oakslib.command.Trigger;
-import org.firstinspires.ftc.teamcode.oakslib.pathing.PathFileParser;
+import org.oakslib.command.CommandBasedOpMode;
+import org.oakslib.command.CommandScheduler;
+import org.oakslib.command.Trigger;
+import org.oakslib.pathing.PathFileParser;
 import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
 import org.junit.Assert;
 import org.junit.Test;

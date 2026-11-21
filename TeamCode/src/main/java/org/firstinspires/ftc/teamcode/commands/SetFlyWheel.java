@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.commands;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.oakslib.command.Command;
+import org.oakslib.command.Command;
 import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
 
 public class SetFlyWheel extends Command {
@@ -16,15 +16,20 @@ public class SetFlyWheel extends Command {
         m_telemetry = telemetry;
         addRequirements(m_shooterSubsystem);
     }
+
+    @Override
     public void initialize() {
         if (!m_tick) {
-            m_telemetry.addLine("help");
-            m_shooterSubsystem.updateFlyWheel(-0.7);
+            m_shooterSubsystem.updateFlyWheel(0.6);
             m_tick = true;
         } else {
-            m_telemetry.addLine("help2");
             m_shooterSubsystem.updateFlyWheel(0);
             m_tick = false;
         }
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 }

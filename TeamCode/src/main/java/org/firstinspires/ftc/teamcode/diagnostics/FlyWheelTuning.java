@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
-import org.firstinspires.ftc.teamcode.oakslib.controllers.PIDFController;
+import org.oakslib.controllers.PIDFController;
 
 @TeleOp(group = "Diagnostics")
 public class FlyWheelTuning extends OpMode {

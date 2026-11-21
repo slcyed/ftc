@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.oakslib.command.SubsystemBase;
-import org.firstinspires.ftc.teamcode.oakslib.controllers.PIDFController;
+import org.oakslib.command.SubsystemBase;
+import org.oakslib.controllers.PIDFController;
 
 public class ShooterSubsystem extends SubsystemBase {
 
