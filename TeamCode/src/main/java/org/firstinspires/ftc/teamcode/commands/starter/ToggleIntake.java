@@ -20,10 +20,10 @@ public class ToggleIntake extends Command {
     @Override
     public void initialize() {
         if (!m_tick) {
-            m_intakeSubsystem.updateIntake(0.6);
+            m_intakeSubsystem.startIntake();
             m_tick = true;
         } else {
-            m_intakeSubsystem.updateIntake(0);
+            m_intakeSubsystem.stopIntake();
             m_tick = false;
         }
     }

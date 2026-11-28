@@ -1,4 +1,4 @@
-// Wifi password is "oaksoaks"
+// Wifi password is "password"
 
 package org.firstinspires.ftc.teamcode.teleop;
 
@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
 
 @TeleOp
 
-public class StarterBotTeleop extends LinearOpMode {
+public class Starterb2 extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
@@ -52,7 +52,7 @@ public class StarterBotTeleop extends LinearOpMode {
         CRServo intakeServoR = new CRServo(hardwareMap, "intakeServoR");
         CRServo intakeServoL = new CRServo(hardwareMap, "intakeServoL");
         CRServo innerServo = new CRServo(hardwareMap, "innerServo");
-
+        innerServo.setInverted(true);
 //        armServo.setPosition(.5);
 
         MecanumDrive drive = new MecanumDrive(
@@ -81,7 +81,7 @@ public class StarterBotTeleop extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        double centerMotorPower = 0.7;
+        double centerMotorPower = 0;
         boolean autoAim = false;
 
         waitForStart();
@@ -97,13 +97,14 @@ public class StarterBotTeleop extends LinearOpMode {
             boolean compensated = false;
 
             // Set Fly Wheel Motor Power when Right Bumper is Pressed
-            if (gamepad1.dpadUpWasPressed()) {
-                centerMotorPower+=.05;
+            if (gamepad1.rightBumperWasPressed()) {
+                if (centerMotorPower == .6) {
+                    centerMotorPower = 0;
+                }else{
+                    centerMotorPower = .6;
+                }
             }
-            if (gamepad1.dpadDownWasPressed()) {
-                centerMotorPower-=.05;
-            }
-            shooter.updateFlyWheel(centerMotorPower);
+
             if (gamepad1.bWasPressed()) {
                 if (intakeServoR.get()==0) {
                     intakeServoR.set(1);
@@ -123,7 +124,7 @@ public class StarterBotTeleop extends LinearOpMode {
 
             if (gamepad1.aWasPressed()) {
                 if (intakeMotor.get()==0) {
-                    intakeMotor.set(.7);
+                    intakeMotor.set(.4);
                 } else {
                     intakeMotor.set(0);
                 }
@@ -164,7 +165,7 @@ public class StarterBotTeleop extends LinearOpMode {
 //                turret.stop();
 //                shooter.updateFlyWheel(centerMotorPower);
 //            }
-//            centerMotor.setPower(centerMotorPower);
+            shooter.updateFlyWheel(centerMotorPower);
             turnAngle = gamepad1.right_stick_x;
 
             drive.driveRobotCentric(
@@ -179,7 +180,6 @@ public class StarterBotTeleop extends LinearOpMode {
                     pose.getX(), pose.getY(), Math.toDegrees(pose.getHeading()));
             telemetry.addData("Velocity", "%.1f, %.1f in/s",
                     velocity.getXComponent(), velocity.getYComponent());
-            telemetry.addData("fw p", centerMotorPower);
 ////            telemetry.addData("Turret tag", turret.hasTarget() ? String.valueOf(turret.getLastTagId()) : "none");
 ////            telemetry.addData("Turret bearing", "%.1f deg", turret.getLastBearingDegrees());
 ////            telemetry.addData("Turret range", "%.1f in", turret.getLastRangeInches());

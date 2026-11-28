@@ -1,0 +1,26 @@
+apply plugin: 'com.android.library'
+apply from: '../build.dependencies.gradle'
+
+android {
+    namespace = 'org.oakslib'
+    compileSdk 36
+    defaultConfig {
+        minSdk 25
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    api 'org.firstinspires.ftc:RobotCore:12.0.0'
+    api 'com.pedropathing:ftc:2.0.4'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}

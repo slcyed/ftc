@@ -104,7 +104,12 @@ public class TurretTeleOp extends LinearOpMode {
                     centerMotorPower = .6;
                 }
             }
-
+            if (gamepad1.dpadUpWasPressed()) {
+                centerMotorPower+=0.05;
+            }
+            if (gamepad1.dpadDownWasPressed()) {
+                centerMotorPower-=0.05;
+            }
             if (gamepad1.bWasPressed()) {
                 if (intakeServoR.get()==0) {
                     intakeServoR.set(1);

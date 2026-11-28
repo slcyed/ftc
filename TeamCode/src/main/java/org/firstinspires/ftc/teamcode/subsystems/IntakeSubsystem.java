@@ -24,8 +24,8 @@ public class IntakeSubsystem extends SubsystemBase {
     }
     public void startIntake() {
         m_intakeMotor.setPower(.7);
-        m_rightIntakeServo.set();
-        m_leftIntakeServo.set();
+        m_rightIntakeServo.setPower(-1);
+        m_leftIntakeServo.setPower(1);
 
     }
     public void transferOn() {
@@ -35,5 +35,8 @@ public class IntakeSubsystem extends SubsystemBase {
         m_transferServo.setPower(0);
     }
     public void stopIntake() {
+        m_intakeMotor.setPower(0);
+        m_rightIntakeServo.setPower(0);
+        m_leftIntakeServo.setPower(0);
     }
 }
